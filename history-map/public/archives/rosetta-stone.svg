@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="300" viewBox="0 0 400 300">
+  <defs>
+    <linearGradient id="bg-rosetta-stone" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0c0a09"/>
+      <stop offset="50%" stop-color="#1a1510"/>
+      <stop offset="100%" stop-color="#12100e"/>
+    </linearGradient>
+    <linearGradient id="accent-rosetta-stone" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#B8A88A" stop-opacity="0"/>
+      <stop offset="50%" stop-color="#B8A88A" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#B8A88A" stop-opacity="0"/>
+    </linearGradient>
+    <filter id="glow-rosetta-stone">
+      <feGaussianBlur stdDeviation="2" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <rect width="400" height="300" fill="url(#bg-rosetta-stone)"/>
+  
+  <rect x="0" y="140" width="400" height="1" fill="url(#accent-rosetta-stone)" opacity="0.4"/>
+  <rect x="30" y="30" width="340" height="240" rx="2" fill="none" stroke="#2a2520" stroke-width="0.5" opacity="0.6"/>
+  
+  <g transform="translate(170, 70)" opacity="0.3">
+    <rect x="5" y="3" width="14" height="18" rx="1" stroke="currentColor" fill="none" stroke-width="1.2"/><path d="M8 8h8M8 11h8M8 14h5" stroke="currentColor" fill="none" stroke-width="1"/>
+  </g>
+  
+  <text x="200" y="108" text-anchor="middle" font-family="'Playfair Display',serif" font-size="10" fill="#e8c88a" opacity="0.5" letter-spacing="3">
+    DOCUMENTARY
+  </text>
+  
+  <text x="200" y="130" text-anchor="middle" font-family="'Noto Serif SC','SimSun',serif" font-size="16" fill="#e8c88a" opacity="0.9">罗塞塔石碑拓</text>
+    <text x="200" y="152" text-anchor="middle" font-family="'Noto Serif SC','SimSun',serif" font-size="16" fill="#e8c88a" opacity="0.9">本</text>
+  
+  <rect x="30" y="270" width="340" height="0.5" fill="#e8c88a" opacity="0.2"/>
+  <text x="370" y="285" text-anchor="end" font-family="'Playfair Display',serif" font-size="7" fill="#78716c" opacity="0.4" letter-spacing="1">
+    ARCHIVE FRAGMENT
+  </text>
+</svg>

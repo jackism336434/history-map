@@ -37,7 +37,7 @@ export default function ChroniclesPage() {
 
   return (
     <div className="flex flex-col min-h-screen bg-background">
-      <Header />
+      <Header pageContext="chronicles" />
 
       <div className="flex flex-1 pt-16">
         <Sidebar />

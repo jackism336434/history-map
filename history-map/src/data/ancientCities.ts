@@ -120,4 +120,70 @@ export const ANCIENT_CITIES: AncientCity[] = [
       "印度河谷的砖城，城市规划的先驱。精密的排水系统与标准化砖块，展现了五千年前的高度文明。",
     image: "/cities/mohenjo-daro.jpg",
   },
+  {
+    nameZh: "提卡尔",
+    nameEn: "Tikal",
+    ancientName: "Tik'al · Ṯiki'",
+    lng: -89.63,
+    lat: 17.22,
+    period: "玛雅 · 公元前200年—公元900年",
+    description:
+      "玛雅文明最伟大的城邦之一，深藏于危地马拉热带雨林之中。神庙塔楼刺破林冠，石刻铭文记录着王朝的兴衰与星辰的运行。",
+    image: "/cities/tikal.jpg",
+  },
+  {
+    nameZh: "君士坦丁堡",
+    nameEn: "Constantinople",
+    ancientName: "Kōnstantinoúpolis · Κωνσταντινούπολις",
+    lng: 28.98,
+    lat: 41.01,
+    period: "拜占庭 · 公元330年—1453年",
+    description:
+      "东罗马帝国的永恒之都，欧亚交界的堡垒。圣索菲亚大教堂的穹顶下，希腊正教的光芒照耀了千年。",
+    image: "/cities/constantinople.jpg",
+  },
+  {
+    nameZh: "比尔卡",
+    nameEn: "Birka",
+    ancientName: "Birka · Björkö",
+    lng: 17.37,
+    lat: 59.38,
+    period: "维京 · 公元800年—975年",
+    description:
+      "维京时代波罗的海最重要的贸易据点，斯堪的纳维亚的第一个城市。来自东方的银币与东方的丝绸在此交汇。",
+    image: "/cities/birka.jpg",
+  },
+  {
+    nameZh: "巴格达",
+    nameEn: "Baghdad",
+    ancientName: "Madīnat as-Salām · مدينة السلام",
+    lng: 44.36,
+    lat: 33.31,
+    period: "阿拔斯 · 公元762年—1258年",
+    description:
+      "阿拔斯王朝的圆形之城，伊斯兰黄金时代的知识心脏。智慧之宫汇聚了从希腊到印度的全部学术遗产。",
+    image: "/cities/baghdad.jpg",
+  },
+  {
+    nameZh: "喀喇和林",
+    nameEn: "Karakorum",
+    ancientName: "Kharakhorum · Хархорин",
+    lng: 102.83,
+    lat: 47.20,
+    period: "蒙古 · 公元1220年—1260年",
+    description:
+      "蒙古帝国的第一个都城，草原上的世界会议厅。窝阔台汗在此建城，东西方的使节、商人与匠人齐聚于此。",
+    image: "/cities/karakorum.jpg",
+  },
+  {
+    nameZh: "吴哥",
+    nameEn: "Angkor",
+    ancientName: "Yasodharapura · យសោធរបុរ",
+    lng: 103.85,
+    lat: 13.41,
+    period: "高棉 · 公元802年—1431年",
+    description:
+      "高棉帝国的圣城，世界上最大的前工业时代城市。吴哥窟的塔尖倒映在护城河中，是人间对天界的模仿。",
+    image: "/cities/angkor.jpg",
+  },
 ];

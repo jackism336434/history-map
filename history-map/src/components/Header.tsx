@@ -2,16 +2,30 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import { usePathname } from "next/navigation";
 
 const navItems = [
   { label: "寰宇图志", href: "/map" },
   { label: "万国史卷", href: "/chronicles" },
-  { label: "全球归档", href: "#" },
-  { label: "藏书阁", href: "#" },
+  { label: "全球归档", href: "/archive" },
+  { label: "藏书阁", href: "/library" },
 ];
 
-export default function Header() {
+const SEARCH_PLACEHOLDERS: Record<string, string> = {
+  "/archive": "探索未触达之史...",
+  "/chronicles": "探索古文明...",
+  "/map": "搜索城市...",
+  "/library": "检索古代文献...",
+};
+
+export default function Header({ pageContext }: { pageContext?: string }) {
   const [searchValue, setSearchValue] = useState("");
+  const pathname = usePathname();
+
+  const placeholder =
+    (pageContext && SEARCH_PLACEHOLDERS[`/${pageContext}`]) ||
+    SEARCH_PLACEHOLDERS[pathname] ||
+    "探索古地名...";
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-8 py-4 bg-background/80 backdrop-blur-md border-b border-border/50">
@@ -20,15 +34,24 @@ export default function Header() {
       </Link>
 
       <nav className="hidden md:flex items-center gap-8">
-        {navItems.map((item) => (
-          <Link
-            key={item.label}
-            href={item.href}
-            className="text-sm text-text-muted hover:text-foreground transition-colors duration-200"
-          >
-            {item.label}
-          </Link>
-        ))}
+        {navItems.map((item) => {
+          const isActive =
+            item.href === pathname ||
+            (item.href !== "#" && pathname.startsWith(item.href));
+          return (
+            <Link
+              key={item.label}
+              href={item.href}
+              className={`text-sm transition-colors duration-200 ${
+                isActive
+                  ? "text-accent"
+                  : "text-text-muted hover:text-foreground"
+              }`}
+            >
+              {item.label}
+            </Link>
+          );
+        })}
       </nav>
 
       <div className="flex items-center gap-4">
@@ -37,7 +60,7 @@ export default function Header() {
             type="text"
             value={searchValue}
             onChange={(e) => setSearchValue(e.target.value)}
-            placeholder="探索古地名..."
+            placeholder={placeholder}
             className="w-48 px-4 py-2 text-sm rounded-full bg-surface border border-border text-foreground placeholder:text-text-muted focus:outline-none focus:border-accent/60 transition-colors duration-200"
           />
           <svg
