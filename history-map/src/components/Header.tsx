@@ -5,7 +5,7 @@ import { useState } from "react";
 
 const navItems = [
   { label: "寰宇图志", href: "/map" },
-  { label: "万国史卷", href: "#" },
+  { label: "万国史卷", href: "/chronicles" },
   { label: "全球归档", href: "#" },
   { label: "藏书阁", href: "#" },
 ];

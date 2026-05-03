@@ -74,3 +74,28 @@ body {
 .font-display {
   font-family: "Playfair Display", "Noto Serif SC", serif;
 }
+
+.prose-custom h2 {
+  font-family: "Playfair Display", "Noto Serif SC", serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: var(--foreground);
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.prose-custom h2:first-child {
+  margin-top: 0;
+}
+
+.prose-custom p {
+  font-size: 0.8125rem;
+  line-height: 1.75;
+  color: var(--text-muted);
+  margin-bottom: 0.75rem;
+}
+
+.prose-custom p:last-child {
+  margin-bottom: 0;
+}

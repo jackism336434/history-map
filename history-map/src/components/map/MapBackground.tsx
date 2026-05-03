@@ -28,6 +28,7 @@ interface MapBackgroundProps {
 export default function MapBackground({ onMapLoad, onCitySelect }: MapBackgroundProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<mapboxgl.Map | null>(null);
+  const rafRef = useRef<number>(0);
 
   useEffect(() => {
     if (!containerRef.current || mapRef.current) return;
@@ -105,11 +106,11 @@ export default function MapBackground({ onMapLoad, onCitySelect }: MapBackground
       });
 
       map.addLayer({
-        id: "hotspot-glow",
+        id: "hotspot-pulse",
         type: "circle",
         source: "hotspots",
         paint: {
-          "circle-radius": 10,
+          "circle-radius": 25,
           "circle-color": GOLD,
           "circle-opacity": 0.15,
           "circle-blur": 1,
@@ -117,22 +118,73 @@ export default function MapBackground({ onMapLoad, onCitySelect }: MapBackground
       });
 
       map.addLayer({
-        id: "hotspot-dot",
+        id: "hotspot-glow",
+        type: "circle",
+        source: "hotspots",
+        paint: {
+          "circle-radius": 16,
+          "circle-color": GOLD,
+          "circle-opacity": 0.2,
+          "circle-blur": 1,
+        },
+      });
+
+      map.addLayer({
+        id: "hotspot-ring",
         type: "circle",
         source: "hotspots",
         paint: {
           "circle-radius": [
             "interpolate", ["linear"], ["zoom"],
-            2, 4,
-            5, 6,
-            8, 8,
+            2, 8,
+            5, 10,
+            8, 12,
           ],
-          "circle-color": GOLD,
-          "circle-opacity": 0.85,
-          "circle-stroke-color": BG,
+          "circle-color": "transparent",
+          "circle-opacity": 1,
+          "circle-stroke-color": GOLD,
           "circle-stroke-width": 1.5,
+          "circle-stroke-opacity": 0.7,
         },
       });
+
+      map.addLayer({
+        id: "hotspot-core",
+        type: "circle",
+        source: "hotspots",
+        paint: {
+          "circle-radius": [
+            "interpolate", ["linear"], ["zoom"],
+            2, 5,
+            5, 6,
+            8, 7,
+          ],
+          "circle-color": GOLD,
+          "circle-opacity": 0.95,
+          "circle-stroke-color": GOLD_DIM,
+          "circle-stroke-width": 1,
+        },
+      });
+
+      map.addLayer({
+        id: "hotspot-hit",
+        type: "circle",
+        source: "hotspots",
+        paint: {
+          "circle-radius": 25,
+          "circle-color": "transparent",
+          "circle-opacity": 0,
+        },
+      });
+
+      function animatePulse() {
+        const opacity = 0.05 + 0.25 * (0.5 + 0.5 * Math.sin(Date.now() / 2000 * Math.PI));
+        try {
+          map.setPaintProperty("hotspot-pulse", "circle-opacity", opacity);
+        } catch {}
+        rafRef.current = requestAnimationFrame(animatePulse);
+      }
+      rafRef.current = requestAnimationFrame(animatePulse);
 
       map.addLayer({
         id: "hotspot-label-zh",
@@ -154,9 +206,9 @@ export default function MapBackground({ onMapLoad, onCitySelect }: MapBackground
           "text-halo-width": 1.5,
           "text-opacity": [
             "step", ["zoom"],
-            0,
-            3, 0.6,
-            5, 1,
+            0.4,
+            2, 0.7,
+            4, 1,
           ],
         },
       });
@@ -182,21 +234,21 @@ export default function MapBackground({ onMapLoad, onCitySelect }: MapBackground
           "text-opacity": [
             "step", ["zoom"],
             0,
-            4, 0.5,
-            6, 0.8,
+            3, 0.5,
+            5, 0.8,
           ],
         },
       });
 
-      map.on("mouseenter", "hotspot-dot", () => {
+      map.on("mouseenter", "hotspot-hit", () => {
         map.getCanvas().style.cursor = "pointer";
       });
 
-      map.on("mouseleave", "hotspot-dot", () => {
+      map.on("mouseleave", "hotspot-hit", () => {
         map.getCanvas().style.cursor = "";
       });
 
-      map.on("click", "hotspot-dot", (e) => {
+      map.on("click", "hotspot-hit", (e) => {
         if (!e.features || !e.features.length) return;
         const feature = e.features[0];
         const props = feature.properties as { nameZh: string; nameEn: string };
@@ -221,6 +273,7 @@ export default function MapBackground({ onMapLoad, onCitySelect }: MapBackground
     mapRef.current = map;
 
     return () => {
+      cancelAnimationFrame(rafRef.current);
       map.remove();
       mapRef.current = null;
     };

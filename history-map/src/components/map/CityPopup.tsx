@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import type { AncientCity } from "@/data/ancientCities";
 
@@ -47,13 +48,14 @@ export default function CityPopup({ city, onClose }: CityPopupProps) {
                 {city.ancientName}
               </p>
 
-              <div className="w-full h-32 rounded-lg bg-background/60 border border-border/30 mb-4 flex items-center justify-center overflow-hidden">
-                <div className="text-center">
-                  <div className="text-accent/20 text-3xl mb-1">🗺</div>
-                  <span className="text-[9px] tracking-wider text-text-muted/40">
-                    古地图残卷
-                  </span>
-                </div>
+              <div className="w-full h-32 rounded-lg overflow-hidden mb-4 relative">
+                <Image
+                  src={city.image}
+                  alt={city.nameZh}
+                  fill
+                  className="object-cover"
+                  sizes="320px"
+                />
               </div>
 
               <p className="text-sm leading-relaxed text-foreground/80">

@@ -6,6 +6,7 @@ export interface AncientCity {
   lat: number;
   period: string;
   description: string;
+  image: string;
 }
 
 export const ANCIENT_CITIES: AncientCity[] = [
@@ -18,6 +19,7 @@ export const ANCIENT_CITIES: AncientCity[] = [
     period: "汉唐 · 公元前202年—公元904年",
     description:
       "西汉与隋唐的都城，丝绸之路的东端起点。百万人口的世界级都会，见证了千年繁华与文明交汇。",
+    image: "/cities/changan.jpg",
   },
   {
     nameZh: "罗马",
@@ -28,6 +30,7 @@ export const ANCIENT_CITIES: AncientCity[] = [
     period: "罗马帝国 · 公元前753年—公元476年",
     description:
       "永恒之城，地中海世界的中心。从共和到帝国，罗马的法律、建筑与道路网络影响了整个西方文明。",
+    image: "/cities/roma.jpg",
   },
   {
     nameZh: "巴比伦",
@@ -38,6 +41,7 @@ export const ANCIENT_CITIES: AncientCity[] = [
     period: "美索不达米亚 · 公元前2300年—公元前539年",
     description:
       "两河流域的明珠，汉谟拉比法典的诞生地。空中花园与巴别塔的传说至今令人神往。",
+    image: "/cities/babylon.jpg",
   },
   {
     nameZh: "雅典",
@@ -48,6 +52,7 @@ export const ANCIENT_CITIES: AncientCity[] = [
     period: "古希腊 · 公元前3000年—公元322年",
     description:
       "西方文明的摇篮，民主与哲学的发源地。帕特农神庙矗立于卫城之上，庇护着苏格拉底与柏拉图的智慧。",
+    image: "/cities/athens.jpg",
   },
   {
     nameZh: "孟斐斯",
@@ -58,6 +63,7 @@ export const ANCIENT_CITIES: AncientCity[] = [
     period: "古埃及 · 公元前3100年—公元前2200年",
     description:
       "下埃及的古都，金字塔建造者的城市。拉美西斯二世在此加冕，尼罗河的馈赠滋养了辉煌的法老文明。",
+    image: "/cities/memphis.jpg",
   },
   {
     nameZh: "巴克特里亚",
@@ -68,6 +74,7 @@ export const ANCIENT_CITIES: AncientCity[] = [
     period: "大夏 · 公元前2500年—公元8世纪",
     description:
       "中亚的十字路口，丝绸之路的关键节点。希腊、波斯、印度与游牧文明在此交融，留下了璀璨的巴克特里亚宝藏。",
+    image: "/cities/bactria.jpg",
   },
   {
     nameZh: "亚历山大",
@@ -78,6 +85,7 @@ export const ANCIENT_CITIES: AncientCity[] = [
     period: "托勒密王朝 · 公元前331年—公元641年",
     description:
       "法老遗产与希腊智慧的交汇。亚历山大图书馆收藏了人类知识的精华，灯塔照亮了地中海的航路。",
+    image: "/cities/alexandria.jpg",
   },
   {
     nameZh: "迦太基",
@@ -88,6 +96,7 @@ export const ANCIENT_CITIES: AncientCity[] = [
     period: "迦太基 · 公元前814年—公元前146年",
     description:
       "腓尼基人的海上霸国，汉尼拔的故土。与罗马争霸百年，虽终陷落，其航海与商业遗产永存。",
+    image: "/cities/carthage.jpg",
   },
   {
     nameZh: "波斯波利斯",
@@ -98,6 +107,7 @@ export const ANCIENT_CITIES: AncientCity[] = [
     period: "阿契美尼德帝国 · 公元前518年—公元前330年",
     description:
       "万王之王的仪式之都，波斯帝国的心脏。百柱大厅与浮雕廊道展示了帝国的恢弘与多元。",
+    image: "/cities/persepolis.jpg",
   },
   {
     nameZh: "摩亨佐达罗",
@@ -108,5 +118,6 @@ export const ANCIENT_CITIES: AncientCity[] = [
     period: "印度河文明 · 公元前2500年—公元前1900年",
     description:
       "印度河谷的砖城，城市规划的先驱。精密的排水系统与标准化砖块，展现了五千年前的高度文明。",
+    image: "/cities/mohenjo-daro.jpg",
   },
 ];
