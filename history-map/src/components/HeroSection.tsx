@@ -1,12 +1,9 @@
 "use client";
 
-import { useMemo } from "react";
+import { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { ANCIENT_CITIES } from "@/data/ancientCities";
-
-const START_YEAR = -221;
-const END_YEAR = 2024;
 
 interface HeroSectionProps {
   timelineValue: number;
@@ -44,13 +41,14 @@ const ERA_CONTENT: Record<string, EraContent> = {
   },
 };
 
+const INTRO_BG = { from: "rgb(12, 10, 9)", to: "rgb(26, 21, 16)" };
+
 interface CityDatum {
   nameZh: string;
   nameEn: string;
   lng: number;
   lat: number;
   era: string;
-  order: number;
 }
 
 function getCityEra(year: number): string {
@@ -59,7 +57,7 @@ function getCityEra(year: number): string {
   return "medieval";
 }
 
-const CITY_DATA: CityDatum[] = ANCIENT_CITIES.map((city, i) => {
+const CITY_DATA: CityDatum[] = ANCIENT_CITIES.map((city) => {
   const yearStr = city.period.match(/前?(\d+)/);
   const yearNum = yearStr ? parseInt(yearStr[1]) : 0;
   const isBC = city.period.includes("前") || city.period.includes("BC");
@@ -70,7 +68,6 @@ const CITY_DATA: CityDatum[] = ANCIENT_CITIES.map((city, i) => {
     lng: city.lng,
     lat: city.lat,
     era: getCityEra(year),
-    order: i,
   };
 });
 
@@ -98,27 +95,36 @@ const CONTINENT_PATHS = [
 ];
 
 export default function HeroSection({ timelineValue }: HeroSectionProps) {
+  const [showIntro, setShowIntro] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setShowIntro(false), 3500);
+    return () => clearTimeout(timer);
+  }, []);
+
   const era = getEraFromValue(timelineValue);
   const content = ERA_CONTENT[era];
-
-  type EraKey = "ancient" | "classical" | "medieval";
   const eraIdx = ERA_ORDER[era] as number;
 
-  const bgColor = useMemo(() => {
+  const activeBg = useMemo(() => {
     const fromParts = content.bgFrom.match(/[0-9a-f]{2}/gi)!.map((h) => parseInt(h, 16));
     const toParts = content.bgTo.match(/[0-9a-f]{2}/gi)!.map((h) => parseInt(h, 16));
-    const from = `rgb(${fromParts[0]}, ${fromParts[1]}, ${fromParts[2]})`;
-    const to = `rgb(${toParts[0]}, ${toParts[1]}, ${toParts[2]})`;
-    return { from, to };
+    return {
+      from: `rgb(${fromParts[0]}, ${fromParts[1]}, ${fromParts[2]})`,
+      to: `rgb(${toParts[0]}, ${toParts[1]}, ${toParts[2]})`,
+    };
   }, [content]);
 
+  const bgColor = showIntro ? INTRO_BG : activeBg;
+
   const mapOpacity = useMemo(() => {
+    if (showIntro) return 0;
     const fadeStart = 0.1;
     const fadeEnd = 0.35;
     if (timelineValue < fadeStart) return 0;
     if (timelineValue > fadeEnd) return 0.35;
     return ((timelineValue - fadeStart) / (fadeEnd - fadeStart)) * 0.35;
-  }, [timelineValue]);
+  }, [timelineValue, showIntro]);
 
   const sortedCities = useMemo(
     () => [...CITY_DATA].sort((a, b) => ERA_ORDER[a.era] - ERA_ORDER[b.era]),
@@ -127,9 +133,10 @@ export default function HeroSection({ timelineValue }: HeroSectionProps) {
 
   return (
     <section
-      className="relative flex flex-1 flex-col items-center justify-center text-center px-8 overflow-hidden transition-colors duration-700"
+      className="relative flex flex-1 flex-col items-center justify-center overflow-hidden"
       style={{
         background: `linear-gradient(135deg, ${bgColor.from}, ${bgColor.to})`,
+        transition: "background 0.8s ease",
       }}
     >
       <svg
@@ -163,7 +170,7 @@ export default function HeroSection({ timelineValue }: HeroSectionProps) {
                 cx={pos.x}
                 cy={pos.y}
                 r={dotR}
-                fill={eraIdx === cityEraIdx ? "#e8c88a" : "#e8c88a"}
+                fill="#e8c88a"
                 opacity={dotOpacity}
               />
               {eraIdx === cityEraIdx && shouldShow && (
@@ -183,45 +190,86 @@ export default function HeroSection({ timelineValue }: HeroSectionProps) {
         })}
       </svg>
 
-      <div className="relative z-10">
+      <div className="relative z-10 px-8 w-full max-w-xl mx-auto text-center">
         <AnimatePresence mode="wait">
-          <motion.div
-            key={era}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.5 }}
-          >
-            <p className="text-sm tracking-[0.3em] text-accent mb-6 uppercase">
-              {content.en}
-            </p>
+          {showIntro ? (
+            <motion.div
+              key="intro"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0, y: -30 }}
+              transition={{ duration: 0.8 }}
+            >
+              <p className="text-sm tracking-[0.3em] text-accent mb-6 uppercase">
+                数字化的时空考古档案
+              </p>
 
-            <h1 className="text-6xl md:text-8xl font-black tracking-[0.15em] text-foreground mb-4">
-              {content.zh}
-            </h1>
+              <h1 className="text-6xl md:text-8xl font-black tracking-[0.15em] text-foreground mb-8">
+                旧舆迷途
+              </h1>
 
-            <p className="max-w-xl text-base leading-relaxed text-text-muted mb-12">
-              {content.sub}
-            </p>
-          </motion.div>
+              <p className="text-base leading-relaxed text-text-muted mb-12">
+                跨越千年时光，以交互式地图探索各国历史事件变迁。
+                <br />
+                每一寸经纬背后，都是文明的回响。
+              </p>
+
+              <div className="flex items-center justify-center gap-4">
+                <Link
+                  href="/map"
+                  className="px-8 py-3 text-sm font-medium tracking-wider rounded-full bg-foreground text-background hover:bg-accent transition-colors duration-200"
+                >
+                  进入地图
+                  <span className="ml-2 text-xs opacity-60">ENTER MAP</span>
+                </Link>
+
+                <Link
+                  href="/library"
+                  className="px-8 py-3 text-sm font-medium tracking-wider rounded-full border border-border text-foreground hover:border-accent hover:text-accent transition-colors duration-200"
+                >
+                  查看史卷
+                </Link>
+              </div>
+            </motion.div>
+          ) : (
+            <motion.div
+              key={`era-${era}`}
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.6 }}
+            >
+              <p className="text-sm tracking-[0.3em] text-accent mb-6 uppercase">
+                {content.en}
+              </p>
+
+              <h1 className="text-6xl md:text-8xl font-black tracking-[0.15em] text-foreground mb-4">
+                {content.zh}
+              </h1>
+
+              <p className="text-base leading-relaxed text-text-muted mb-12 text-left">
+                {content.sub}
+              </p>
+
+              <div className="flex items-center justify-center gap-4">
+                <Link
+                  href="/map"
+                  className="px-8 py-3 text-sm font-medium tracking-wider rounded-full bg-foreground text-background hover:bg-accent transition-colors duration-200"
+                >
+                  进入地图
+                  <span className="ml-2 text-xs opacity-60">ENTER MAP</span>
+                </Link>
+
+                <Link
+                  href="/library"
+                  className="px-8 py-3 text-sm font-medium tracking-wider rounded-full border border-border text-foreground hover:border-accent hover:text-accent transition-colors duration-200"
+                >
+                  查看史卷
+                </Link>
+              </div>
+            </motion.div>
+          )}
         </AnimatePresence>
-
-        <div className="flex items-center gap-4">
-          <Link
-            href="/map"
-            className="px-8 py-3 text-sm font-medium tracking-wider rounded-full bg-foreground text-background hover:bg-accent transition-colors duration-200"
-          >
-            进入地图
-            <span className="ml-2 text-xs opacity-60">ENTER MAP</span>
-          </Link>
-
-          <Link
-            href="/library"
-            className="px-8 py-3 text-sm font-medium tracking-wider rounded-full border border-border text-foreground hover:border-accent hover:text-accent transition-colors duration-200"
-          >
-            查看史卷
-          </Link>
-        </div>
       </div>
     </section>
   );
