@@ -5,95 +5,75 @@ import type { LibraryCategory } from "@/data/libraryItems";
 import { CATEGORY_LABELS, LIBRARY_ITEMS } from "@/data/libraryItems";
 
 const CATEGORY_COUNTS: Record<LibraryCategory, number> = {
-  origins: LIBRARY_ITEMS.filter((i) => i.category === "origins").length,
-  empires: LIBRARY_ITEMS.filter((i) => i.category === "empires").length,
-  encounters: LIBRARY_ITEMS.filter((i) => i.category === "encounters").length,
+  normative: LIBRARY_ITEMS.filter((i) => i.category === "normative").length,
+  narrative: LIBRARY_ITEMS.filter((i) => i.category === "narrative").length,
+  documentary: LIBRARY_ITEMS.filter((i) => i.category === "documentary").length,
 };
 
-function OriginsVisual() {
-  const bars = [
-    { x: 40, h: 120, opacity: 0.35 },
-    { x: 65, h: 160, opacity: 0.18 },
-    { x: 90, h: 90, opacity: 0.4 },
-    { x: 115, h: 180, opacity: 0.15 },
-    { x: 140, h: 140, opacity: 0.3 },
-    { x: 165, h: 70, opacity: 0.45 },
-    { x: 190, h: 200, opacity: 0.12 },
-    { x: 215, h: 110, opacity: 0.25 },
-    { x: 240, h: 155, opacity: 0.2 },
+function NormativeVisual() {
+  const pillars = [
+    { x: 60, w: 14, h: 160, opacity: 0.3 },
+    { x: 90, w: 18, h: 190, opacity: 0.2 },
+    { x: 125, w: 14, h: 170, opacity: 0.35 },
+    { x: 160, w: 18, h: 185, opacity: 0.25 },
+    { x: 195, w: 14, h: 155, opacity: 0.3 },
   ];
   return (
     <svg viewBox="0 0 280 260" className="w-full h-full">
-      {bars.map((bar, i) => (
-        <rect
-          key={i}
-          x={bar.x}
-          y={260 - bar.h - 30}
-          width={18}
-          height={bar.h}
-          fill="#e8c88a"
-          opacity={bar.opacity}
-          rx="1"
-        />
+      {pillars.map((p, i) => (
+        <g key={i}>
+          <rect x={p.x} y={260 - p.h - 30} width={p.w} height={p.h} fill="#e8c88a" opacity={p.opacity} rx="1" />
+          <rect x={p.x - 3} y={260 - p.h - 30 - 8} width={p.w + 6} height={8} fill="#e8c88a" opacity={p.opacity + 0.1} rx="1" />
+        </g>
       ))}
-      <rect x="30" y="250" width="240" height="0.5" fill="#e8c88a" opacity="0.2" />
+      <rect x="40" y="230" width="200" height={1} fill="#e8c88a" opacity="0.2" />
     </svg>
   );
 }
 
-function EmpiresVisual() {
+function NarrativeVisual() {
   return (
     <svg viewBox="0 0 280 260" className="w-full h-full">
-      <line x1="40" y1="50" x2="120" y2="80" stroke="#e8c88a" strokeWidth="1" opacity="0.5" />
-      <line x1="120" y1="80" x2="200" y2="60" stroke="#e8c88a" strokeWidth="1" opacity="0.35" />
-      <line x1="200" y1="60" x2="250" y2="100" stroke="#e8c88a" strokeWidth="1" opacity="0.25" />
-      <line x1="120" y1="80" x2="80" y2="140" stroke="#e8c88a" strokeWidth="0.8" opacity="0.3" />
-      <line x1="200" y1="60" x2="220" y2="150" stroke="#e8c88a" strokeWidth="0.8" opacity="0.2" />
-      <line x1="80" y1="140" x2="140" y2="180" stroke="#e8c88a" strokeWidth="0.6" opacity="0.2" />
-      <line x1="220" y1="150" x2="160" y2="210" stroke="#e8c88a" strokeWidth="0.6" opacity="0.15" />
+      <path d="M40,200 Q80,80 120,120 T200,100 T260,180" fill="none" stroke="#e8c88a" strokeWidth="1" opacity="0.35" />
+      <path d="M40,180 Q100,60 150,140 Q200,200 260,150" fill="none" stroke="#e8c88a" strokeWidth="0.8" opacity="0.25" />
       {[
-        { cx: 40, cy: 50, r: 3 },
-        { cx: 120, cy: 80, r: 4 },
-        { cx: 200, cy: 60, r: 3.5 },
-        { cx: 250, cy: 100, r: 2.5 },
-        { cx: 80, cy: 140, r: 2 },
-        { cx: 220, cy: 150, r: 2 },
-        { cx: 140, cy: 180, r: 1.5 },
-        { cx: 160, cy: 210, r: 1.5 },
+        { cx: 120, cy: 120, r: 4 },
+        { cx: 200, cy: 100, r: 3 },
+        { cx: 150, cy: 140, r: 3.5 },
       ].map((dot, i) => (
         <circle key={i} cx={dot.cx} cy={dot.cy} r={dot.r} fill="#e8c88a" opacity="0.6" />
       ))}
-      <rect x="30" y="230" width="220" height="0.5" fill="#e8c88a" opacity="0.2" />
+      <rect x="40" y="230" width="200" height={1} fill="#e8c88a" opacity="0.2" />
     </svg>
   );
 }
 
-function EncountersVisual() {
+function DocumentaryVisual() {
+  const rows = [
+    { y: 80, items: [40, 80, 120, 160, 200, 240] },
+    { y: 120, items: [60, 100, 140, 180, 220] },
+    { y: 160, items: [50, 90, 130, 170, 210] },
+    { y: 200, items: [70, 110, 150, 190, 230] },
+  ];
   return (
     <svg viewBox="0 0 280 260" className="w-full h-full">
-      <path d="M80,80 Q140,40 200,100" fill="none" stroke="#e8c88a" strokeWidth="0.8" opacity="0.3" strokeDasharray="4 3" />
-      <path d="M60,160 Q140,120 220,140" fill="none" stroke="#5B9BBD" strokeWidth="0.8" opacity="0.3" strokeDasharray="4 3" />
-      <path d="M100,200 Q160,160 200,200" fill="none" stroke="#e8c88a" strokeWidth="0.6" opacity="0.2" strokeDasharray="3 4" />
-      {[
-        { cx: 80, cy: 80, r: 10, color: "#e8c88a", opacity: 0.15 },
-        { cx: 200, cy: 100, r: 12, color: "#5B9BBD", opacity: 0.12 },
-        { cx: 60, cy: 160, r: 6, color: "#e8c88a", opacity: 0.2 },
-        { cx: 220, cy: 140, r: 8, color: "#e8c88a", opacity: 0.15 },
-      ].map((circle, i) => (
-        <g key={i}>
-          <circle cx={circle.cx} cy={circle.cy} r={circle.r} fill={circle.color} opacity={circle.opacity} />
-          <circle cx={circle.cx} cy={circle.cy} r={2} fill={circle.color} opacity="0.6" />
-        </g>
-      ))}
-      <rect x="30" y="230" width="220" height="0.5" fill="#e8c88a" opacity="0.2" />
+      {rows.map((row, ri) =>
+        row.items.map((x, ci) => (
+          <g key={`${ri}-${ci}`}>
+            <rect x={x} y={row.y} width={28} height={4} fill="#e8c88a" opacity={0.15 + ri * 0.03} rx="1" />
+            <circle cx={x + 14} cy={row.y - 4} r={1.5} fill="#e8c88a" opacity={0.3 + ri * 0.05} />
+          </g>
+        ))
+      )}
+      <rect x="30" y="230" width="220" height={1} fill="#e8c88a" opacity="0.2" />
     </svg>
   );
 }
 
 const VISUALS: Record<LibraryCategory, () => React.ReactNode> = {
-  origins: OriginsVisual,
-  empires: EmpiresVisual,
-  encounters: EncountersVisual,
+  normative: NormativeVisual,
+  narrative: NarrativeVisual,
+  documentary: DocumentaryVisual,
 };
 
 interface CategoryGridProps {
@@ -102,7 +82,7 @@ interface CategoryGridProps {
 }
 
 export default function CategoryGrid({ selected, onSelect }: CategoryGridProps) {
-  const categories: LibraryCategory[] = ["origins", "empires", "encounters"];
+  const categories: LibraryCategory[] = ["normative", "narrative", "documentary"];
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-5 max-w-4xl mx-auto">

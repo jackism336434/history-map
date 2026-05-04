@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useCallback } from "react";
+import { useRef, useCallback } from "react";
 import { motion } from "framer-motion";
 
 const START_YEAR = -221;
@@ -12,8 +12,12 @@ function yearToLabel(year: number): string {
   return `AD ${year}`;
 }
 
-export default function Timeline() {
-  const [value, setValue] = useState(0.5);
+interface TimelineProps {
+  value: number;
+  onChange: (v: number) => void;
+}
+
+export default function Timeline({ value, onChange }: TimelineProps) {
   const trackRef = useRef<HTMLDivElement>(null);
   const dragging = useRef(false);
 
@@ -47,7 +51,7 @@ export default function Timeline() {
     const rect = trackRef.current.getBoundingClientRect();
     const y = e.clientY - rect.top;
     const ratio = Math.max(0, Math.min(1, y / rect.height));
-    setValue(ratio);
+    onChange(ratio);
   }
 
   return (

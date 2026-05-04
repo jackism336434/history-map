@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="300" viewBox="0 0 400 300">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0c0a09"/>
+      <stop offset="50%" stop-color="#1a1510"/>
+      <stop offset="100%" stop-color="#12100e"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="300" fill="url(#bg)"/>
+  <rect x="30" y="30" width="340" height="240" rx="2" fill="none" stroke="#2a2520" stroke-width="0.5" opacity="0.5"/>
+  <text x="200" y="120" text-anchor="middle" font-family="'Playfair Display',serif" font-size="9" fill="#e8c88a" opacity="0.45" letter-spacing="4">DOCUMENTARY</text>
+  <text x="200" y="155" text-anchor="middle" font-family="'Noto Serif SC','SimSun',serif" font-size="16" fill="#e8c88a" opacity="0.85">巴比伦编年史</text>
+  <rect x="155" y="172" width="90" height="0.5" fill="#e8c88a" opacity="0.3"/>
+  <text x="370" y="280" text-anchor="end" font-family="'Playfair Display',serif" font-size="7" fill="#78716c" opacity="0.35" letter-spacing="1.5">LIBRARY FRAGMENT</text>
+</svg>

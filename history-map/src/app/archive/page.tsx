@@ -45,7 +45,7 @@ export default function ArchivePage() {
 
   return (
     <div className="flex flex-col min-h-screen bg-background">
-      <Header pageContext="archive" />
+      <Header pageContext="archive" searchValue={search} onSearchChange={setSearch} />
 
       <div className="flex flex-1 pt-16">
         <ArchiveSidebar
@@ -68,23 +68,6 @@ export default function ArchivePage() {
               </p>
             </div>
             <div className="flex items-center gap-6">
-              <div className="relative">
-                <input
-                  type="text"
-                  value={search}
-                  onChange={(e) => setSearch(e.target.value)}
-                  placeholder="探索未触达之史..."
-                  className="w-52 px-4 py-1.5 text-[11px] tracking-wider rounded-full bg-surface border border-border text-foreground placeholder:text-text-muted/50 focus:outline-none focus:border-accent/60 transition-colors duration-200"
-                />
-                <svg
-                  className="absolute right-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-text-muted/50"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                </svg>
-              </div>
               <div className="text-right">
                 <span className="text-2xl font-display font-bold text-accent">
                   {filtered.length}

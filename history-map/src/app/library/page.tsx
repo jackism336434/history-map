@@ -34,7 +34,8 @@ export default function LibraryPage() {
           i.titleEn.toLowerCase().includes(q) ||
           i.excerpt.toLowerCase().includes(q) ||
           i.authorZh.toLowerCase().includes(q) ||
-          i.regionZh.toLowerCase().includes(q)
+          i.regionZh.toLowerCase().includes(q) ||
+          i.tags.some((t) => t.includes(search.trim()))
       );
     }
     return list;
@@ -62,7 +63,7 @@ export default function LibraryPage() {
 
   return (
     <div className="flex flex-col min-h-screen bg-background">
-      <Header pageContext="library" />
+      <Header pageContext="library" searchValue={search} onSearchChange={setSearch} />
 
       <main className="flex-1 pt-16 pb-16">
         <div className="max-w-5xl mx-auto px-6">
@@ -125,6 +126,13 @@ export default function LibraryPage() {
                         <p className="text-[11px] text-text-muted/60 leading-relaxed mt-2 line-clamp-2">
                           {item.excerpt}
                         </p>
+                        <div className="flex flex-wrap gap-1 mt-2">
+                          {item.tags.map((tag) => (
+                            <span key={tag} className="text-[9px] tracking-wider text-text-muted/40 border border-border/20 px-1.5 py-0.5 rounded-full">
+                              #{tag}
+                            </span>
+                          ))}
+                        </div>
                       </div>
                       <div className="flex-shrink-0 text-right">
                         <span className="text-[10px] tracking-wider text-accent/50 font-display">
@@ -139,8 +147,6 @@ export default function LibraryPage() {
           )}
 
           <SearchIndex
-            searchValue={search}
-            onSearchChange={setSearch}
             onIndexClick={handleIndexClick}
           />
         </div>

@@ -37,7 +37,7 @@ export default function ChroniclesPage() {
 
   return (
     <div className="flex flex-col min-h-screen bg-background">
-      <Header pageContext="chronicles" />
+      <Header pageContext="chronicles" searchValue={search} onSearchChange={setSearch} />
 
       <div className="flex flex-1 pt-16">
         <Sidebar />
@@ -48,8 +48,6 @@ export default function ChroniclesPage() {
           <FilterBar
             selected={eraFilter}
             onSelect={setEraFilter}
-            searchValue={search}
-            onSearchChange={setSearch}
           />
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 justify-items-center pb-12">

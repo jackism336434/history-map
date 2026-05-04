@@ -12,14 +12,32 @@ import { content as silkRoadJournal } from "./content/library/silk-road-journal"
 import { content as ibnBattutaExcerpt } from "./content/library/ibn-battuta-excerpt";
 import { content as nestorianStele } from "./content/library/nestorian-stele";
 import { content as borobudurSutra } from "./content/library/borobudur-sutra";
+import { content as marcoPoloTravels } from "./content/library/marco-polo-travels";
+import { content as romanEmpireDeclineFall } from "./content/library/roman-empire-decline-fall";
+import { content as babylonianChronicle } from "./content/library/babylonian-chronicle";
+import { content as shiJi } from "./content/library/shi-ji";
 
-export type LibraryCategory = "origins" | "empires" | "encounters";
+export type LibraryCategory = "normative" | "narrative" | "documentary";
+
+export const LIBRARY_TAGS = [
+  "帝国",
+  "文明",
+  "交流",
+  "战争",
+  "宗教",
+  "贸易",
+  "法律",
+  "政治",
+] as const;
+
+export type LibraryTag = (typeof LIBRARY_TAGS)[number];
 
 export interface LibraryItem {
   id: string;
   titleZh: string;
   titleEn: string;
   category: LibraryCategory;
+  tags: LibraryTag[];
   excerpt: string;
   fullText: string;
   year: number;
@@ -33,9 +51,9 @@ export interface LibraryItem {
 }
 
 export const CATEGORY_LABELS: Record<LibraryCategory, { zh: string; en: string; zhSub: string }> = {
-  origins: { zh: "文明的起源", en: "ORIGINS OF CIVILIZATION", zhSub: "从洪荒到城邦" },
-  empires: { zh: "帝国的兴衰", en: "RISE AND FALL OF EMPIRES", zhSub: "王权与秩序" },
-  encounters: { zh: "交流与碰撞", en: "ENCOUNTERS AND EXCHANGES", zhSub: "丝路与大洋" },
+  normative: { zh: "法度", en: "NORMATIVE", zhSub: "人类为世界设定的秩序与边界" },
+  narrative: { zh: "史事", en: "NARRATIVE", zhSub: "被记录、被讲述的过去" },
+  documentary: { zh: "人间", en: "DOCUMENTARY", zhSub: "帝国与社会真实运转的痕迹" },
 };
 
 export const LIBRARY_ITEMS: LibraryItem[] = [
@@ -43,7 +61,8 @@ export const LIBRARY_ITEMS: LibraryItem[] = [
     id: "guixu-tukao",
     titleZh: "归墟图考·卷三",
     titleEn: "Registers of the Abyss · Vol. III",
-    category: "origins",
+    category: "narrative",
+    tags: ["文明"],
     excerpt: "凡四海之极，皆有待考之域。山川之变、城郭之废、典章之佚，皆为前朝不传之秘。",
     fullText: guixuTukao,
     year: -200,
@@ -59,7 +78,8 @@ export const LIBRARY_ITEMS: LibraryItem[] = [
     id: "tianwen-zhi",
     titleZh: "天文志·星经",
     titleEn: "Celestial Records · Star Canon",
-    category: "origins",
+    category: "normative",
+    tags: ["文明"],
     excerpt: "斗柄所指，天下皆春。二十八年宿环列于天极，日月五星行于其间，其道有常，其变有度。",
     fullText: tianwenZhi,
     year: -100,
@@ -75,7 +95,8 @@ export const LIBRARY_ITEMS: LibraryItem[] = [
     id: "huangdi-neijing",
     titleZh: "黄帝内经·素问",
     titleEn: "Inner Canon of the Yellow Emperor · Basic Questions",
-    category: "origins",
+    category: "normative",
+    tags: ["文明"],
     excerpt: "阴阳者，天地之道也，万物之纲纪，变化之父母，生杀之本始，神明之府也。",
     fullText: huangdiNeijing,
     year: -300,
@@ -91,7 +112,8 @@ export const LIBRARY_ITEMS: LibraryItem[] = [
     id: "shanhai-jing",
     titleZh: "山海经·海外经",
     titleEn: "Classic of Mountains and Seas · Outer Lands",
-    category: "origins",
+    category: "narrative",
+    tags: ["文明"],
     excerpt: "海外自东南陬至东北陬者，有结匈国、南山、比翼鸟，其状如凫而一翼一目，相得乃飞。",
     fullText: shanhaiJing,
     year: -400,
@@ -107,7 +129,8 @@ export const LIBRARY_ITEMS: LibraryItem[] = [
     id: "uruku-tablet",
     titleZh: "乌鲁克泥版·创世铭文",
     titleEn: "Uruk Creation Tablet · Enuma Elish Fragment",
-    category: "origins",
+    category: "normative",
+    tags: ["文明", "宗教"],
     excerpt: "当上方的天尚未命名，下方的地尚无称谓，唯有阿普苏初生与穆木·提亚马特——万物之源泉。",
     fullText: urukuTablet,
     year: -2100,
@@ -123,7 +146,8 @@ export const LIBRARY_ITEMS: LibraryItem[] = [
     id: "han-shu-dili",
     titleZh: "汉书·地理志",
     titleEn: "Book of Han · Geography Treatise",
-    category: "empires",
+    category: "documentary",
+    tags: ["帝国"],
     excerpt: "天下郡国百有三，县邑千三百四十四。户口之盛，版图之广，皆前代所未有也。",
     fullText: hanShuDili,
     year: 92,
@@ -139,7 +163,8 @@ export const LIBRARY_ITEMS: LibraryItem[] = [
     id: "res-gestae",
     titleZh: "奥古斯都功业录",
     titleEn: "Res Gestae Divi Augusti",
-    category: "empires",
+    category: "narrative",
+    tags: ["帝国"],
     excerpt: "吾年十九，以私人之策举义兵，复共和于危难之中。元老院、骑士与罗马人民，皆尊吾为首。",
     fullText: resGestae,
     year: 14,
@@ -155,7 +180,8 @@ export const LIBRARY_ITEMS: LibraryItem[] = [
     id: "shahnameh-fragment",
     titleZh: "列王纪残篇",
     titleEn: "Shahnameh Fragment",
-    category: "empires",
+    category: "narrative",
+    tags: ["帝国"],
     excerpt: "扎尔与卢达芭的故事，是火焰与玫瑰的结合——白发的英雄来自大山，黑眸的公主生于王宫。",
     fullText: shahnamehFragment,
     year: 1010,
@@ -171,7 +197,8 @@ export const LIBRARY_ITEMS: LibraryItem[] = [
     id: "persepolis-archive",
     titleZh: "波斯波利斯档案",
     titleEn: "Persepolis Fortification Archive",
-    category: "empires",
+    category: "documentary",
+    tags: ["帝国"],
     excerpt: "大流士二十二年，皮什亚乌瓦达地区输送谷物五百库尔，经司库伊蒂马验证，盖印存档。",
     fullText: persepolisArchive,
     year: -500,
@@ -187,7 +214,8 @@ export const LIBRARY_ITEMS: LibraryItem[] = [
     id: "tang-liudian",
     titleZh: "唐六典·户部",
     titleEn: "Tang Six Statutes · Ministry of Revenue",
-    category: "empires",
+    category: "documentary",
+    tags: ["帝国", "法律"],
     excerpt: "天下户八百九十万，口四千六百万有奇。赋税之法，租庸调三者并行，计丁授田，按丁征税。",
     fullText: tangLiudian,
     year: 738,
@@ -203,7 +231,8 @@ export const LIBRARY_ITEMS: LibraryItem[] = [
     id: "silk-road-journal",
     titleZh: "丝路行纪·西域传",
     titleEn: "Silk Road Travel Journal · Western Regions",
-    category: "encounters",
+    category: "narrative",
+    tags: ["帝国", "交流", "贸易"],
     excerpt: "出玉门关西行三日，至伊吾。自伊吾至高昌四百里，沿途烽燧相望，商胡贩客时见于道。",
     fullText: silkRoadJournal,
     year: 630,
@@ -219,7 +248,8 @@ export const LIBRARY_ITEMS: LibraryItem[] = [
     id: "ibn-battuta-excerpt",
     titleZh: "伊本·白图泰行纪摘录",
     titleEn: "Ibn Battuta's Rihla · Excerpt",
-    category: "encounters",
+    category: "narrative",
+    tags: ["交流", "贸易"],
     excerpt: "我抵达了印度斯坦，这是世界上最辽阔的国度之一。其人口之众、物产之丰，非亲历者不能信也。",
     fullText: ibnBattutaExcerpt,
     year: 1333,
@@ -235,7 +265,8 @@ export const LIBRARY_ITEMS: LibraryItem[] = [
     id: "nestorian-stele",
     titleZh: "景教碑文拓本",
     titleEn: "Nestorian Stele Inscription",
-    category: "encounters",
+    category: "narrative",
+    tags: ["帝国", "宗教", "交流"],
     excerpt: "真常之道，妙而复兴。景风东扇，法浪西归。大秦有声，流溉此方。",
     fullText: nestorianStele,
     year: 781,
@@ -251,7 +282,8 @@ export const LIBRARY_ITEMS: LibraryItem[] = [
     id: "borobudur-sutra",
     titleZh: "婆罗浮屠经卷",
     titleEn: "Borobudur Sutra Scroll",
-    category: "encounters",
+    category: "normative",
+    tags: ["宗教", "交流"],
     excerpt: "此岸即彼岸。当善萨行者观照世间，见苦集灭道，于一切法中无所执着，即为到彼岸。",
     fullText: borobudurSutra,
     year: 800,
@@ -262,5 +294,73 @@ export const LIBRARY_ITEMS: LibraryItem[] = [
     authorEn: "Anonymous · Sailendra Dynasty",
     civId: "khmer",
     coverImage: "/library/borobudur-sutra.svg",
+  },
+  {
+    id: "marco-polo-travels",
+    titleZh: "马可波罗行纪",
+    titleEn: "The Travels of Marco Polo",
+    category: "narrative",
+    tags: ["交流", "贸易"],
+    excerpt: "在此城中，宝物、珍珠、药材和香料源源不断地从印度和四方运来，这里是世界上商品贸易最频繁的城市之一。",
+    fullText: marcoPoloTravels,
+    year: 1298,
+    regionZh: "欧亚诸地",
+    regionEn: "Eurasia",
+    reference: "MS-001-M",
+    authorZh: "马可·波罗·中世纪意大利",
+    authorEn: "Marco Polo · Medieval Italy",
+    civId: null,
+    coverImage: "/library/marco-polo-travels.svg",
+  },
+  {
+    id: "roman-empire-decline-fall",
+    titleZh: "罗马帝国衰亡史",
+    titleEn: "The History of the Decline and Fall of the Roman Empire",
+    category: "narrative",
+    tags: ["帝国"],
+    excerpt: "历史，归根结底，不过是人类罪恶、愚蠢和不幸的记录。",
+    fullText: romanEmpireDeclineFall,
+    year: 1776,
+    regionZh: "罗马帝国",
+    regionEn: "Roman Empire",
+    reference: "MS-002-E",
+    authorZh: "爱德华·吉本·英国启蒙时代",
+    authorEn: "Edward Gibbon · Enlightenment Britain",
+    civId: null,
+    coverImage: "/library/roman-empire-decline-fall.svg",
+  },
+  {
+    id: "babylonian-chronicle",
+    titleZh: "巴比伦编年史",
+    titleEn: "Babylonian Chronicle",
+    category: "documentary",
+    tags: ["帝国", "文明"],
+    excerpt: "目击星辰的人也开始目击帝国。",
+    fullText: babylonianChronicle,
+    year: -700,
+    regionZh: "巴比伦尼亚",
+    regionEn: "Babylonia",
+    reference: "MS-003-B",
+    authorZh: "不详·古代美索不达米亚",
+    authorEn: "Unknown · Ancient Mesopotamia",
+    civId: null,
+    coverImage: "/library/babylonian-chronicle.svg",
+  },
+  {
+    id: "shi-ji",
+    titleZh: "史记",
+    titleEn: "Records of the Grand Historian",
+    category: "narrative",
+    tags: ["帝国", "文明", "交流", "战争", "宗教", "贸易", "法律", "政治"],
+    excerpt: "究天人之际，通古今之变，成一家之言。上起轩辕，下至太初，凡百三十篇，五十二万六千五百言。",
+    fullText: shiJi,
+    year: -91,
+    regionZh: "汉帝国及前代诸国",
+    regionEn: "Han Empire and Preceding States",
+    reference: "SJ-001-H",
+    authorZh: "司马迁·西汉",
+    authorEn: "Sima Qian · Western Han",
+    civId: null,
+    coverImage: "/library/shi-ji.svg",
   },
 ];

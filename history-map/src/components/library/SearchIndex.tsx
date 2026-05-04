@@ -3,12 +3,10 @@
 import { LibraryItem } from "@/data/libraryItems";
 
 interface SearchIndexProps {
-  searchValue: string;
-  onSearchChange: (v: string) => void;
   onIndexClick: (type: "chronology" | "geography" | "author") => void;
 }
 
-export default function SearchIndex({ searchValue, onSearchChange, onIndexClick }: SearchIndexProps) {
+export default function SearchIndex({ onIndexClick }: SearchIndexProps) {
   const indices = [
     {
       type: "chronology" as const,
@@ -51,24 +49,6 @@ export default function SearchIndex({ searchValue, onSearchChange, onIndexClick 
 
   return (
     <div className="max-w-4xl mx-auto">
-      <div className="relative max-w-lg mx-auto mb-8">
-        <input
-          type="text"
-          value={searchValue}
-          onChange={(e) => onSearchChange(e.target.value)}
-          placeholder="检索古代文献..."
-          className="w-full px-6 py-3 text-sm tracking-wider rounded-full bg-surface border border-border text-foreground placeholder:text-text-muted/50 focus:outline-none focus:border-accent/50 transition-colors duration-200"
-        />
-        <svg
-          className="absolute right-5 top-1/2 -translate-y-1/2 w-4 h-4 text-text-muted/50"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-        </svg>
-      </div>
-
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         {indices.map((idx) => (
           <button

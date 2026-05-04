@@ -18,9 +18,18 @@ const SEARCH_PLACEHOLDERS: Record<string, string> = {
   "/library": "检索古代文献...",
 };
 
-export default function Header({ pageContext }: { pageContext?: string }) {
-  const [searchValue, setSearchValue] = useState("");
+interface HeaderProps {
+  pageContext?: string;
+  searchValue?: string;
+  onSearchChange?: (v: string) => void;
+}
+
+export default function Header({ pageContext, searchValue: externalSearch, onSearchChange }: HeaderProps) {
+  const [internalSearch, setInternalSearch] = useState("");
   const pathname = usePathname();
+
+  const searchValue = externalSearch !== undefined ? externalSearch : internalSearch;
+  const handleSearchChange = onSearchChange ?? setInternalSearch;
 
   const placeholder =
     (pageContext && SEARCH_PLACEHOLDERS[`/${pageContext}`]) ||
@@ -59,7 +68,7 @@ export default function Header({ pageContext }: { pageContext?: string }) {
           <input
             type="text"
             value={searchValue}
-            onChange={(e) => setSearchValue(e.target.value)}
+            onChange={(e) => handleSearchChange(e.target.value)}
             placeholder={placeholder}
             className="w-48 px-4 py-2 text-sm rounded-full bg-surface border border-border text-foreground placeholder:text-text-muted focus:outline-none focus:border-accent/60 transition-colors duration-200"
           />

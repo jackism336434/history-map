@@ -52,10 +52,15 @@ export default function LibraryModal({ item, onClose }: LibraryModalProps) {
 
             <div className="px-8 pt-6 pb-4 border-b border-border/30 flex items-center justify-between">
               <div>
-                <div className="flex items-center gap-2 mb-1">
+                <div className="flex items-center gap-2 mb-1 flex-wrap">
                   <span className="text-[9px] tracking-[0.2em] text-accent/50 border border-accent/20 px-2 py-0.5 rounded-full">
                     {label.zh} · {label.en}
                   </span>
+                  {item.tags.map((tag) => (
+                    <span key={tag} className="text-[9px] tracking-wider text-text-muted/50 border border-border/30 px-1.5 py-0.5 rounded-full">
+                      #{tag}
+                    </span>
+                  ))}
                   <span className="text-[9px] tracking-[0.15em] text-text-muted/30 font-mono">
                     {item.reference}
                   </span>
